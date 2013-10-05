@@ -5,7 +5,7 @@
 // @include     http://hyp2.hyperiums.com/servlet/Maps?maptype=planets_trade
 // @include     http://hyp2.hyperiums.com/servlet/Maps
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
-// @version     1
+// @version     2
 // @grant       none
 // ==/UserScript==
 
@@ -45,7 +45,10 @@ map.flush = function () {
 }
 map.populate = function () {
   var self = this;
-  $('table.stdArray tr.line0, table.stdArray tr.line1').each(function (obj) {
+  $('table.stdArray tr.line0')
+    .add('table.stdArray tr.line1')
+    .add('table.stdArray tr.lineCenteredOn')
+    .each(function (obj) {
     var planet,
       coords,
       x,
