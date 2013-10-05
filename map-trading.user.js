@@ -174,7 +174,7 @@ map.parse = function ($obj) {
   }
 
   if (planet.tag === '-') {
-    planet.tag = '';
+    planet.tag = '[]';
   }
 
   switch (planet.race) {
