@@ -1,4 +1,4 @@
-#Collection of greasemonkey scripts for hyperiums
+#GS scripts for hyperiums
 
 ##Map trading
 ![ScreenShot](https://raw.github.com/Nasga/hyperiums-greasemonkey/master/map-trading.png)
