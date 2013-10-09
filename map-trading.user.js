@@ -5,7 +5,7 @@
 // @include     http://hyp2.hyperiums.com/servlet/Maps?maptype=planets_trade
 // @include     http://hyp2.hyperiums.com/servlet/Maps
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
-// @version     3
+// @version     4
 // @grant       none
 // ==/UserScript==
 
@@ -130,6 +130,7 @@ map.renderer = function () {
             '<li id="' + planet.id + '">' +
             planet.name + ' ' +
             planet.tag + ' ' +
+            planet.civ + ' ' + 
             planet.race +
             planet.type + ' ' +
             planet.gov + ' ' + 
