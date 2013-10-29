@@ -5,7 +5,7 @@
 // @include     http://hyp2.hyperiums.com/servlet/Maps?maptype=planets_trade
 // @include     http://hyp2.hyperiums.com/servlet/Maps
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
-// @version     4
+// @version     5
 // @grant       none
 // ==/UserScript==
 
@@ -127,7 +127,8 @@ map.renderer = function () {
           var planet;
           planet = this.planets['(' + x + ',' + y + ')'][key];
           $coords.append(
-            '<li id="' + planet.id + '">' +
+            '<li id="' + planet.id + '"' +
+            'class="' + planet.class + '">' +
             planet.name + ' ' +
             planet.tag + ' ' +
             planet.civ + ' ' + 
@@ -177,13 +178,19 @@ map.parse = function ($obj) {
     "activity": $obj.find('td:eq(8)').text()
   }
 
+  if ($obj.hasClass('alertLight')) {
+    planet.class = 'alertLight';
+  }
+
   hrefNews = $obj.find('td:eq(0) a').attr('href');
-  if (hrefNews.search('planetid=') >= 0) {
-    planet.id = hrefNews.replace('Maps?planetnews=&planetid=','');
-  } else {
-    planet.id = $obj.find('td:eq(0) a')
-      .attr('onclick')
-      .match(/toPlanetId=(\d+);/)[1];
+  if (hrefNews) {
+    if (hrefNews.search('planetid=') >= 0) {
+      planet.id = hrefNews.replace('Maps?planetnews=&planetid=','');
+    } else {
+      planet.id = $obj.find('td:eq(0) a')
+        .attr('onclick')
+        .match(/toPlanetId=(\d+);/)[1];
+    }
   }
 
   if (planet.tag === '-') {
