@@ -6,6 +6,9 @@
 To use this map, you must use Firefox with Greasemonkey extension.
 Once you have greasemonkey, just hit this [install link](https://raw.github.com/Nasga/hyperiums-greasemonkey/master/map-trading.user.js)
 
+### v6
+* Add planet count
+
 ### v5
 * Fix bhed planets
 

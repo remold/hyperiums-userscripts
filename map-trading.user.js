@@ -5,7 +5,7 @@
 // @include     http://hyp2.hyperiums.com/servlet/Maps?maptype=planets_trade
 // @include     http://hyp2.hyperiums.com/servlet/Maps
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
-// @version     5
+// @version     6
 // @grant       none
 // ==/UserScript==
 
@@ -25,6 +25,7 @@ $('#searchButton')
 
 var map = {}
 map.planets = {};
+map.planetCount = 0;
 map.x = {}
 map.x.min = null;
 map.x.max = null;
@@ -33,6 +34,7 @@ map.y.min = null;
 map.y.max = null;
 map.flush = function () {
   this.planets = {}
+  this.planetCount = 0;
   this.x = {
     min: null,
     max: null
@@ -80,6 +82,7 @@ map.populate = function () {
     }
 
     self.planets[planet.coords].push(planet);
+    self.planetCount++;
   });   
 }
 map.back = function () {
@@ -151,6 +154,11 @@ map.renderer = function () {
   }
 
   this.applyStyle();
+  this.displaySum();
+}
+map.displaySum = function() {
+  $('.bigtext')
+    .append(' Total planets : ' + this.planetCount);
 }
 map.applyStyle = function () {
   
