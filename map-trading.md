@@ -1,5 +1,6 @@
 ---
-title: Map
+layout: main
+title: Map Changelog
 ---
 
 # Map changelog
