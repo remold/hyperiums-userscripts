@@ -16,3 +16,6 @@ To run userscript in your browser, there different solutions :
 ## Fleets status
 
 ## Upkeep percent
+![ScreenShot](https://raw.github.com/Nasga/hyperiums-userscripts/master/upkeep-percent.png)
+[Install this script](https://raw.github.com/Nasga/hyperiums-userscripts/master/upkeep-percent.user.js)   
+[Read the changelog](upkeep-percent.html)
