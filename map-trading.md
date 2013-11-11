@@ -1,3 +1,7 @@
+---
+title: Map
+---
+
 # Map changelog
 
 ## v6
