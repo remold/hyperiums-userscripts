@@ -20,6 +20,9 @@ To do :
 [Read the changelog](map-tradping.html)
 
 ## Fleets status
+![ScreenShot](https://raw.github.com/Nasga/hyperiums-userscripts/master/fleets-status.png)
+[Install this script](https://raw.github.com/Nasga/hyperiums-userscripts/master/fleets-status.user.js)   
+[Read the changelog](fleets-status.html)
 
 ## Upkeep percent
 ![ScreenShot](https://raw.github.com/Nasga/hyperiums-userscripts/master/upkeep-percent.png)
