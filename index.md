@@ -11,8 +11,8 @@ To run userscript in your browser, there different solutions :
 
 To do :
 
-* Check links for upkeep percent
-* Release the fleets status extension
+* Release the fleet map (with many options)
+* Add functionnal tests suite with travis.
 
 ## Map
 ![ScreenShot](https://raw.github.com/Nasga/hyperiums-userscripts/master/map-trading.png)
