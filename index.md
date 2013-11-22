@@ -6,8 +6,12 @@ title: Hyperiums userscripts
 
 To run userscript in your browser, there different solutions : 
 
-* Firefox with [greasemonkey](https://addons.mozilla.org/fr/firefox/addon/greasemonkey/) extension
-* Safari with [ninjakit](https://github.com/os0x/NinjaKit) extension
+* Firefox with [greasemonkey](https://addons.mozilla.org/fr/firefox/addon/greasemonkey/) extension.
+* Safari with [ninjakit](https://github.com/os0x/NinjaKit) extension.
+* Chrome as chrome extension :
+  * Download the script.
+  * Open [chrome://extensions/](chrome://extensions/).
+  * Drag the script file in the tab.
 
 To do :
 
