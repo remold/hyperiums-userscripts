@@ -15,8 +15,14 @@ To run userscript in your browser, there different solutions :
 
 To do :
 
+* Check/Fix the compatibility with chrome
 * Release the fleet map (with many options)
 * Add functionnal tests suite with travis.
+
+## Population avg
+![ScreenShot](https://raw.github.com/Nasga/hyperiums-userscripts/master/population-avg.png)
+[Install this script](https://raw.github.com/Nasga/hyperiums-userscripts/master/population-avg.user.js)   
+[Read the changelog](population-avg.html)
 
 ## Map
 ![ScreenShot](https://raw.github.com/Nasga/hyperiums-userscripts/master/map-trading.png)
