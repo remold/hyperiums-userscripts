@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include    http://hyp2.hyperiums.com/servlet/Home
-// @version     2
+// @version     3
 // @grant       none
 // ==/UserScript==
 
@@ -32,7 +32,7 @@ if (!$('.tabbertab').length) {
     }
   };
   $('body')
-    .find('img[src^="/misc/pop_icon_Human"]')
+    .find('img[src*="/misc/pop_icon_Human"]')
     .parent('td')
     .parent('tr')
     .find('td:eq(1) span:eq(1)')
@@ -44,7 +44,7 @@ if (!$('.tabbertab').length) {
     }
   );
   $('body')
-    .find('img[src^="/misc/pop_icon_Azterk"]')
+    .find('img[src*="/misc/pop_icon_Azterk"]')
     .parent('td')
     .parent('tr')
     .find('td:eq(1) span:eq(1)')
@@ -56,7 +56,7 @@ if (!$('.tabbertab').length) {
     }
   );
   $('body')
-    .find('img[src^="/misc/pop_icon_Xillor"]')
+    .find('img[src*="/misc/pop_icon_Xillor"]')
     .parent('td')
     .parent('tr')
     .find('td:eq(1) span:eq(1)')
@@ -126,7 +126,7 @@ $('.tabbertab').each(
 
   var growSum = 0;
   $(tab)
-    .find('img[src^="/misc/pop_icon_Human"]')
+    .find('img[src*="/misc/pop_icon_Human"]')
     .parent('td')
     .parent('tr')
     .find('td:eq(1) span:eq(1)')
@@ -138,7 +138,7 @@ $('.tabbertab').each(
     }
   );
   $(tab)
-    .find('img[src^="/misc/pop_icon_Azterk"]')
+    .find('img[src*="/misc/pop_icon_Azterk"]')
     .parent('td')
     .parent('tr')
     .find('td:eq(1) span:eq(1)')
@@ -150,7 +150,7 @@ $('.tabbertab').each(
     }
   );
   $(tab)
-    .find('img[src^="/misc/pop_icon_Xillor"]')
+    .find('img[src*="/misc/pop_icon_Xillor"]')
     .parent('td')
     .parent('tr')
     .find('td:eq(1) span:eq(1)')
