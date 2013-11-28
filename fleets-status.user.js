@@ -65,6 +65,7 @@ function intToAvgp (avgp) {
 
 $('.tabbertab > table').each(function(obj) {
   var planet = {};
+  planet.id = $('a.planetName', this).attr('href').split('=')[1];
   planet.name = $('.planetName', this).text();
   planet.coords = $('.planetName', this).parent('td').text().replace(planet.name, '');
   planet.fleets = {

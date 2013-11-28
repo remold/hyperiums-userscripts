@@ -4,7 +4,7 @@
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @require     https://raw.github.com/Nasga/hyperiums-userscripts/master/libs/moment.min.js
 // @include     http://hyp2.hyperiums.com/servlet/*
-// @version     1
+// @version     2
 // @grant       none
 // ==/UserScript==
 
@@ -53,9 +53,6 @@ var Hyperiums7 = {
 };
 
 var ticks = Hyperiums7.ticks;
-ticks.sort(function (a, b) {
-  a.name.localeCompare(b.name);
-});
 
 
 var offsetInMS = new Date().getTime() -
@@ -63,11 +60,11 @@ var offsetInMS = new Date().getTime() -
     $('.servertime')
       .eq(0)
       .text()
-      .replace('Server Time: ', '')
+      .match(/(\d){4}-(\d){2}-(\d){2} (\d){2}:(\d){2}:(\d){2}/)[0]
       .replace(' ','T') + '+00:00'
     );
 
-// $('.servertime').remove();
+$('.servertime').remove();
 var $div = $('<div id="hyperiums7-ticks" class="servertime">');
 $('body').append($div);
 $('body').append(
@@ -115,7 +112,6 @@ $('body').append(
   var serverDate = new Date(new Date().getTime() - offsetInMS);
   $div.empty();
   var ul = $('<ul>');
-  // console.log(serverDate);
   ul.append($('<li>')
     .text(
       'Server Time: ' + moment(serverDate).utc().format('YYYY-MM-DD HH:mm:ss')
