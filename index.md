@@ -19,6 +19,11 @@ To do :
 * Release the fleet map (with many options)
 * Add functionnal tests suite with travis.
 
+## Ticks
+![ScreenShot](https://raw.github.com/Nasga/hyperiums-userscripts/master/ticks.png)
+[Install this script](https://raw.github.com/Nasga/hyperiums-userscripts/master/ticks.user.js)   
+[Read the changelog](ticks.html)
+
 ## Population avg
 ![ScreenShot](https://raw.github.com/Nasga/hyperiums-userscripts/master/population-avg.png)
 [Install this script](https://raw.github.com/Nasga/hyperiums-userscripts/master/population-avg.user.js)   
