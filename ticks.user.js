@@ -4,7 +4,7 @@
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @require     https://raw.github.com/Nasga/hyperiums-userscripts/master/libs/moment.min.js
 // @include     http://hyp2.hyperiums.com/servlet/*
-// @version     2
+// @version     3
 // @grant       none
 // ==/UserScript==
 
@@ -43,10 +43,9 @@ var Hyperiums7 = {
     new Tick('Build', 23),
     new Tick('Cash', 31, 8, 6),
     new Tick('Move/Control', 26),
-    new Tick('Tech', 18),
+    new Tick('Energy/Tech', 18),
     new Tick('N/A', 6),
-    new Tick('Battle', 6, 2),
-    new Tick('Energy', 18)
+    new Tick('Battle', 6, 2)
   ].sort(function (a, b) {
     return a.name.localeCompare(b.name);
   })
