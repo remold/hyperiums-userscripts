@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include    http://hyp2.hyperiums.com/servlet/Fleets?pagetype=factories
-// @version     12
+// @version     13
 // @grant       none
 // ==/UserScript==
 
@@ -33,7 +33,7 @@ var race = {
 };
 var spans = $( "span" );
 $('body')
-  .find("TD:contains('- Human -') SPAN.highlight")
+  .find("TD:contains('Human -') SPAN.highlight")
   .each(function(idx, elt) {
     GaGenSum += parseFloat($(elt).text());
     planets++;
@@ -45,7 +45,7 @@ $('body')
 // filter(function(){ return $(this).text().toLowerCase() === 'test';})
 var Aobjs=
 $('body')
-    .find("TD:contains('- Azterk -') SPAN.highlight")
+    .find("TD:contains('Azterk -') SPAN.highlight")
     .each(function(idx, elt) {
       GaGenSum += parseInt($(elt).text());
       planets++;
@@ -54,7 +54,7 @@ $('body')
     }
 );
 $('body')
-  .find("TD:contains('- Xillor -') SPAN.highlight")
+  .find("TD:contains('Xillor -') SPAN.highlight")
   .each(function(idx, elt) {
     GaGenSum += parseInt($(elt).text());
     planets++;
