@@ -47,19 +47,19 @@ var Aobjs=
 $('body')
     .find("TD:contains('Azterk -') SPAN.highlight")
     .each(function(idx, elt) {
-      GaGenSum += parseInt($(elt).text());
+      GaGenSum += parseFloat($(elt).text());
       planets++;
       race.azterk.planets ++;
-      race.azterk.sum += parseInt($(elt).text());
+      race.azterk.sum += parseFloat($(elt).text());
     }
 );
 $('body')
   .find("TD:contains('Xillor -') SPAN.highlight")
   .each(function(idx, elt) {
-    GaGenSum += parseInt($(elt).text());
+    GaGenSum += parseFloat($(elt).text());
     planets++;
     race.xillor.planets ++;
-    race.xillor.sum += parseInt($(elt).text());
+    race.xillor.sum += parseFloat($(elt).text());
   }
 );
 
