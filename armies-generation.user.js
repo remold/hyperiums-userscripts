@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include    http://hyp2.hyperiums.com/servlet/Fleets?pagetype=factories
-// @version     18
+// @version     20
 // @grant       none
 // ==/UserScript==
 
@@ -17,17 +17,14 @@ var planets = 0;
 var race = {
   human: {
     sum:0,
-    avg:0,
     planets:0
   },
   azterk: {
     sum:0,
-    avg:0,
     planets:0
   },
   xillor: {
     sum:0,
-    avg:0,
     planets:0
   }
 };
@@ -63,18 +60,6 @@ $('body')
   }
 );
 
-if (race.human.sum > 0) {
-  race.human.avg = Math.round((race.human.sum / race.human.planets)*10)/10;
-}
-
-if (race.azterk.sum > 0) {
-  race.azterk.avg = Math.round((race.azterk.sum / race.azterk.planets)*10)/10;
-}
-
-if (race.xillor.sum > 0) {
-  race.xillor.avg = Math.round((race.xillor.sum / race.xillor.planets)*10)/10;
-}
-
 $('body center')
   .append(
     '<div class="banner" ' +
@@ -87,9 +72,9 @@ $('body center')
     '</i> )' +
     '<br /> GA gen Avg : ' +
     '<strong>' + Math.round((GaGenSum / planets)*10)/10 + '</strong> (' +
-    ' H:<i>' + Math.round(race.human.avg*10)/10  +
-    '</i> | A:<i>' + Math.round(race.azterk.avg*10)/10 +
-    '</i> | X:<i>' + Math.round(race.xillor.avg*10)/10 +
+    ' H:<i>' + Math.round((race.human.sum / race.human.planets) *10)/10  +
+    '</i> | A:<i>' + Math.round((race.azterk.sum / race.azterk.planets) *10)/10 +
+    '</i> | X:<i>' + Math.round((race.xillor.sum / race.xillor.planets)*10)/10 +
     '</i> )'  +
     '</div>' +
     '<br />' +
