@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include    http://hyp2.hyperiums.com/servlet/Fleets?pagetype=factories
-// @version     20
+// @version     21
 // @grant       none
 // ==/UserScript==
 
@@ -30,7 +30,10 @@ var race = {
 };
 var spans = $( "span" );
 $('body')
-  .find("TD:contains('Human -') SPAN.highlight")
+  .find("TD:contains('Human -') SPAN.highlight, " +
+        "TD:contains('Humain -') SPAN.highlight, " +
+        "TD:contains('Menschen -') SPAN.highlight, " +
+        "TD:contains('Mensen -') SPAN.highlight")
   .each(function(idx, elt) {
     GaGenSum += parseFloat($(elt).text());
     planets++;
