@@ -3,13 +3,25 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Home
-// @version     22
+// @version     34
 // @grant       none
 // ==/UserScript==
 
 /* global $:false */
 
 "use strict";
+
+function addGlobalStyle(css) {
+    var head, style;
+    head = document.getElementsByTagName('head')[0];
+    if (!head) { return; }
+    style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = css;
+    head.appendChild(style);
+}
+
+addGlobalStyle(".td_right { text-align: right ! important; } .th_right { text-align: right ! important; }");
 
 if (!$('.tabbertab').length) {
   var populationSum = 0;
@@ -170,47 +182,72 @@ if (!$('.tabbertab').length) {
     race.xillor.avg = Math.round(race.xillor.sum / race.xillor.planets);
   }
 
+  if (race.human.sum == 0) { race.human.sum = " ." }
+  if (race.azterk.sum == 0) { race.azterk.sum = " ." }
+  if (race.xillor.sum == 0) { race.xillor.sum = " ."}
+  if (race.human.max == 0) { race.human.max = " ." }
+  if (race.azterk.max == 0) { race.azterk.max = " ." }
+  if (race.xillor.max == 0) { race.xillor.max = " ."}
+  if (race.human.avg == 0) { race.human.avg = " ." }
+  if (race.azterk.avg == 0) { race.azterk.avg = " ." }
+  if (race.xillor.avg == 0) { race.xillor.avg = " ."}
+  if (race.human.min == 9999999) { race.human.min = " ." }
+  if (race.azterk.min == 9999999) { race.azterk.min = " ." }
+  if (race.xillor.min == 9999999) { race.xillor.min = " ."}
+  if (race.human.growth == 0) { race.human.growth = " ." }
+  if (race.azterk.growth == 0) { race.azterk.growth = " ." }
+  if (race.xillor.growth == 0) { race.xillor.growth = " ."}
+
   $('body div.tinytext:last')
     .after(
-      '<div class="banner" ' +
-      'style="text-align: left; width: 580px;" ' +
-      '>' +
-      'Planet # : <strong>'+ planets + '</strong> (' +
-      ' H:<i>' + race.human.planets +
-      '</i> | A:<i>' + race.azterk.planets +
-      '</i> | X:<i>' + race.xillor.planets +
-      '</i> )' +
-      '<br />Pop Sum : <strong>'+ populationSum + '</strong> (' +
-      ' H:<i>' + race.human.sum +
-      '</i> | A:<i>' + race.azterk.sum +
-      '</i> | X:<i>' + race.xillor.sum +
-      '</i> )' +
-      '<br /> Pop Max : ' +
-      '<strong>' + populationMax + '</strong> (' +
-      ' H:<i>' + race.human.max  +
-      '</i> | A:<i>' + race.azterk.max +
-      '</i> | X:<i>' + race.xillor.max +
-      '</i> )'  +
-      '<br /> Pop Avg : ' +
-      '<strong>' + Math.round(populationSum / planets) + '</strong> (' +
-      ' H:<i>' + race.human.avg  +
-      '</i> | A:<i>' + race.azterk.avg +
-      '</i> | X:<i>' + race.xillor.avg +
-      '</i> )'  +
-      '<br /> Pop Min : ' +
-      '<strong>' + populationMin + '</strong> (' +
-      ' H:<i>' + race.human.min  +
-      '</i> | A:<i>' + race.azterk.min +
-      '</i> | X:<i>' + race.xillor.min +
-      '</i> )'  +
-      '<br /> Pop Growth : ' +
-      '<strong>' + populationGrowth + '</strong> (' +
-      ' H:<i>' + race.human.growth  +
-      '</i> | A:<i>' + race.azterk.growth +
-      '</i> | X:<i>' + race.xillor.growth +
-      '</i> )'  +
-      '</div>' +
-      '<br />'
+          '<div class="banner" ' +
+              'style="text-align: left; width: 580px;" ' +
+              '>' +
+              '<table border="0" width="100%">' +
+              '<tr><th></th>' +
+              '<th class="th_right">Total</th>' +
+              '<th class="th_right">Human</th>' +
+              '<th class="th_right">Azterk</th>' +
+              '<th class="th_right">Xillor</th>' +
+              '</tr>' +
+
+              '<tr><td>Planet #</td>' +
+              '<td class="td_right"><strong>'+ planets + '</strong></td>' +
+              '<td class="td_right">' + race.human.planets + '</td>' +
+              '<td class="td_right">' + race.azterk.planets + '</td>' +
+              '<td class="td_right">' + race.xillor.planets + '</td></tr>' +
+
+              '<tr><td>Population Sum</td>' +
+              '<td class="td_right"><strong>'+ populationSum + '</strong></td>' +
+              '<td class="td_right">' + race.human.sum + '</td>' +
+              '<td class="td_right">' + race.azterk.sum + '</td>' +
+              '<td class="td_right">' + race.xillor.sum + '</td></tr>' +
+
+              '<tr><td>Population Max</td>' +
+              '<td class="td_right"><strong>'+ populationMax + '</strong></td>' +
+              '<td class="td_right">' + race.human.max + '</td>' +
+              '<td class="td_right">' + race.azterk.max + '</td>' +
+              '<td class="td_right">' + race.xillor.max + '</td></tr>' +
+
+              '<tr><td>Population Avg</td>' +
+              '<td class="td_right"><strong>'+ Math.round(populationSum / planets) + '</strong></td>' +
+              '<td class="td_right">' + race.human.avg + '</td>' +
+              '<td class="td_right">' + race.azterk.avg + '</td>' +
+              '<td class="td_right">' + race.xillor.avg + '</td></tr>' +
+
+              '<tr><td>Population Min</td>' +
+              '<td class="td_right"><strong>'+ populationMin + '</strong></td>' +
+              '<td class="td_right">' + race.human.min + '</td>' +
+              '<td class="td_right">' + race.azterk.min + '</td>' +
+              '<td class="td_right">' + race.xillor.min + '</td></tr>' +
+
+              '<tr><td>Population Growth #</td>' +
+              '<td class="td_right"><strong class="td_right">'+ populationGrowth + '</strong></td>' +
+              '<td class="td_right">' + race.human.growth + '</td>' +
+              '<td class="td_right">' + race.azterk.growth + '</td>' +
+              '<td class="td_right">' + race.xillor.growth + '</td></tr>' +
+
+              '</table></div><br />'
     );
 }
 
@@ -374,46 +411,72 @@ $('.tabbertab').each(
     race.xillor.avg = Math.round(race.xillor.sum / race.xillor.planets);
   }
 
+  if (race.human.sum == 0) { race.human.sum = " ." }
+  if (race.azterk.sum == 0) { race.azterk.sum = " ." }
+  if (race.xillor.sum == 0) { race.xillor.sum = " ."}
+  if (race.human.max == 0) { race.human.max = " ." }
+  if (race.azterk.max == 0) { race.azterk.max = " ." }
+  if (race.xillor.max == 0) { race.xillor.max = " ."}
+  if (race.human.avg == 0) { race.human.avg = " ." }
+  if (race.azterk.avg == 0) { race.azterk.avg = " ." }
+  if (race.xillor.avg == 0) { race.xillor.avg = " ."}
+  if (race.human.min == 9999999) { race.human.min = " ." }
+  if (race.azterk.min == 9999999) { race.azterk.min = " ." }
+  if (race.xillor.min == 9999999) { race.xillor.min = " ."}
+  if (race.human.growth == 0) { race.human.growth = " ." }
+  if (race.azterk.growth == 0) { race.azterk.growth = " ." }
+  if (race.xillor.growth == 0) { race.xillor.growth = " ."}
+
   $(tab)
     .append(
-      '<div class="banner" ' +
-      'style="text-align: left; width: 580px;" ' +
-      '>' +
-      'Planet # : <strong>'+ planets + '</strong> (' +
-      ' H:<i>' + race.human.planets +
-      '</i> | A:<i>' + race.azterk.planets +
-      '</i> | X:<i>' + race.xillor.planets +
-      '</i> )' +
-      '<br />Pop Sum : <strong>'+ populationSum + '</strong> (' +
-      ' H:<i>' + race.human.sum +
-      '</i> | A:<i>' + race.azterk.sum +
-      '</i> | X:<i>' + race.xillor.sum +
-      '</i> )' +
-      '<br /> Pop Max : ' +
-      '<strong>' + populationMax + '</strong> (' +
-      ' H:<i>' + race.human.max  +
-      '</i> | A:<i>' + race.azterk.max +
-      '</i> | X:<i>' + race.xillor.max +
-      '</i> )'  +
-      '<br /> Pop Avg : ' +
-      '<strong>' + Math.round(populationSum / planets) + '</strong> (' +
-      ' H:<i>' + race.human.avg  +
-      '</i> | A:<i>' + race.azterk.avg +
-      '</i> | X:<i>' + race.xillor.avg +
-      '</i> )'  +
-      '<br /> Pop Min : ' +
-      '<strong>' + populationMin + '</strong> (' +
-      ' H:<i>' + race.human.min  +
-      '</i> | A:<i>' + race.azterk.min +
-      '</i> | X:<i>' + race.xillor.min +
-      '</i> )'  +
-      '<br /> Pop Growth : ' +
-      '<strong>' + populationGrowth + '</strong> (' +
-      ' H:<i>' + race.human.growth  +
-      '</i> | A:<i>' + race.azterk.growth +
-      '</i> | X:<i>' + race.xillor.growth +
-      '</i> )'  +
-      '</div>' +
-      '<br />'
+          '<div class="banner" ' +
+              'style="text-align: left; width: 580px;" ' +
+              '>' +
+              '<table border="0" width="100%">' +
+
+              '<tr><th></th>' +
+              '<th class="th_right">Total</th>' +
+              '<th class="th_right">Human</th>' +
+              '<th class="th_right">Azterk</th>' +
+              '<th class="th_right">Xillor</th>' +
+              '</tr>' +
+
+              '<tr><td>Planet #</td>' +
+              '<td class="td_right"><strong>'+ planets + '</strong></td>' +
+              '<td class="td_right">' + race.human.planets + '</td>' +
+              '<td class="td_right">' + race.azterk.planets + '</td>' +
+              '<td class="td_right">' + race.xillor.planets + '</td></tr>' +
+
+              '<tr><td>Population Sum</td>' +
+              '<td class="td_right"><strong>'+ populationSum + '</strong></td>' +
+              '<td class="td_right">' + race.human.sum + '</td>' +
+              '<td class="td_right">' + race.azterk.sum + '</td>' +
+              '<td class="td_right">' + race.xillor.sum + '</td></tr>' +
+
+              '<tr><td>Population Max</td>' +
+              '<td class="td_right"><strong>'+ populationMax + '</strong></td>' +
+              '<td class="td_right">' + race.human.max + '</td>' +
+              '<td class="td_right">' + race.azterk.max + '</td>' +
+              '<td class="td_right">' + race.xillor.max + '</td></tr>' +
+
+              '<tr><td>Population Avg</td>' +
+              '<td class="td_right"><strong>'+ Math.round(populationSum / planets) + '</strong></td>' +
+              '<td class="td_right">' + race.human.avg + '</td>' +
+              '<td class="td_right">' + race.azterk.avg + '</td>' +
+              '<td class="td_right">' + race.xillor.avg + '</td></tr>' +
+
+              '<tr><td>Population Min</td>' +
+              '<td class="td_right"><strong>'+ populationMin + '</strong></td>' +
+              '<td class="td_right">' + race.human.min + '</td>' +
+              '<td class="td_right">' + race.azterk.min + '</td>' +
+              '<td class="td_right">' + race.xillor.min + '</td></tr>' +
+
+              '<tr><td>Population Growth #</td>' +
+              '<td class="td_right"><strong class="td_right">'+ populationGrowth + '</strong></td>' +
+              '<td class="td_right">' + race.human.growth + '</td>' +
+              '<td class="td_right">' + race.azterk.growth + '</td>' +
+              '<td class="td_right">' + race.xillor.growth + '</td></tr>' +
+
+              '</table></div><br />'
     );
 });
