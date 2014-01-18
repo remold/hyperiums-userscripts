@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     31
+// @version     34
 // @grant       none
 // ==/UserScript==
 
@@ -120,6 +120,35 @@ if (window.location.search.indexOf("action=fdispmsg") > -1) {
 //            alert(forumPostDate);
                 if (forumPostDate > storedForumDate) {
                     forumJSon[forumThreadId] = forumPostDate.toUTCString();
+                }
+            }
+        )
+        setForumStorage(forumJSon);
+    }
+}
+
+if (window.location.search.indexOf("action=lastmsg") > -1) {
+    if (storageAvailable) {
+        var forumPostDate;
+        var forumThreadId;
+        var storedForumDate;
+        var link = "";
+
+        $('body center table.hc:not(.body)')
+            .each(function (idx, elt) {
+                if ($(elt).width() > 460) {
+                    link = $(elt).find('tr.msgForum td.hc a').attr("href");
+//                if (link != 'undefined') {
+                    forumThreadId = getUrlVars(link)["threadid"];
+                    if (forumJSon[forumThreadId]) {
+                        storedForumDate = new Date(forumJSon[forumThreadId]);
+                    } else {
+                        storedForumDate = new Date(1970, 0, 1);
+                    }
+                    forumPostDate = hypDateToDate($(elt).find('table.sender td.player').text().substr(0, 19));
+                    if (forumPostDate > storedForumDate) {
+                        forumJSon[forumThreadId] = forumPostDate.toUTCString();
+                    }
                 }
             }
         )
