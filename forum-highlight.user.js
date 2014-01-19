@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     40
+// @version     44
 // @grant       none
 // ==/UserScript==
 
@@ -19,7 +19,6 @@ if (typeof(Storage) !== "undefined") {
 var forumJSon = getForumStorage();
 
 function storeForumPostDate(forumThreadId, forumPostDate) {
-    var dummy;
     if (!forumJSon[forumThreadId]) {
         forumJSon[forumThreadId] = forumPostDate;
         return true;
@@ -114,6 +113,32 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
             }
         );
 
+        // Mark all threads as read where last post is made by current player
+        // only when a messages was posted
+        if ($('body center center span.info:not(.bigtext)').length > 0) {
+            var currentplayer = $('#htopmenu li:eq(4) a b').text();
+
+            $('body center form tr:not(#forumArray)')
+                .each(function (idx, elt) {
+                    if ($(elt).find('#noStyle').length < 1) {
+                        if ($(elt).find('td.hc:eq(3)').text() == currentplayer) {
+                            forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
+                            link = $(elt).find('td:not(.hc) a:first').prop("href");
+                            threadId = getUrlVars(link)["threadid"];
+                            if (forumJSon[threadId]) {
+                                storedForumDate = new Date(forumJSon[threadId]);
+                            } else {
+                                storedForumDate = new Date(1970, 0, 1);
+                            }
+                            if (forumThreadLastPost > storedForumDate) {
+                                forumJSon[threadId] = forumThreadLastPost.toUTCString();
+                            }
+                        }
+                    }
+                }
+            )
+            setForumStorage(forumJSon);
+        }
 
         $('body center form tr:not(#forumArray)')
             .each(function (idx, elt) {
