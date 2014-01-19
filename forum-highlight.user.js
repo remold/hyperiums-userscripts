@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     34
+// @version     39
 // @grant       none
 // ==/UserScript==
 
@@ -86,11 +86,34 @@ if (window.location.search.indexOf("action=fenter") > -1) {
         var link = "";
         var threadId = "";
         var forumThreadLastPost;
+
+        $('body ul.solidblockmenu2').append('<li><a class="megaTextItem" id="markAllRead">Mark all Read</li>');
+        $('#markAllRead').click(function () {
+                $('body center form tr:not(#forumArray)')
+                    .each(function (idx, elt) {
+                        if ($(elt).find('#noStyle').length < 1) {
+                            link = $(elt).find('td:not(.hc) a:first').prop("href");
+                            threadId = getUrlVars(link)["threadid"];
+                            forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
+                            if (forumJSon[threadId]) {
+                                storedForumDate = new Date(forumJSon[threadId]);
+                            } else {
+                                storedForumDate = new Date(1970, 0, 1);
+                            }
+                            if (forumThreadLastPost > storedForumDate) {
+                                forumJSon[threadId] = forumThreadLastPost.toUTCString();
+                                $(elt).find('td:not(.hc) a:first').css("font-style", "normal");
+                            }
+                        }
+                    }
+                )
+                setForumStorage(forumJSon);
+            }
+        );
+
+
         $('body center form tr:not(#forumArray)')
             .each(function (idx, elt) {
-                // x = $(elt).parent();
-                //.find("td.hc:first");
-
                 link = $(elt).find('td:not(.hc) a:first').prop("href");
                 threadId = getUrlVars(link)["threadid"];
                 forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
@@ -98,7 +121,9 @@ if (window.location.search.indexOf("action=fenter") > -1) {
                     $(elt).find('td:not(.hc) a:first').css("font-style", "italic");
                 }
             }
-        )
+        );
+
+
     }
 }
 
@@ -122,7 +147,7 @@ if (window.location.search.indexOf("action=fdispmsg") > -1) {
                     forumJSon[forumThreadId] = forumPostDate.toUTCString();
                 }
             }
-        )
+        );
         setForumStorage(forumJSon);
     }
 }
@@ -151,7 +176,7 @@ if (window.location.search.indexOf("action=lastmsg") > -1) {
                     }
                 }
             }
-        )
+        );
         setForumStorage(forumJSon);
     }
 }
