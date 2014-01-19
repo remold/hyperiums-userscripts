@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     45
+// @version     46
 // @grant       none
 // @copyright   2013+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -75,6 +75,22 @@ function getUrlVars(urlIn) {
     return vars;
 }
 
+function getHypTheme() {
+    var theme = "0";
+    $('head link')
+        .each(function (idx, elt) {
+            if ($(elt).attr('href').indexOf("favicon") > 0) {
+                if ($(elt).attr('href').substr(0, 5) == "/misc") {
+                    theme = "0";
+                } else {
+                    theme = $(elt).attr('href').substr(13, 1);
+                }
+            }
+        }
+    )
+    return theme;
+}
+
 if ((window.location.search.indexOf("action=fenter") > -1) ||
     ($('body center center span.info:not(.bigtext)').length > 0)) {
     if (storageAvailable) {
@@ -111,7 +127,13 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
         // Mark all threads as read where last post is made by current player
         // only when a messages was posted
         if ($('body center center span.info:not(.bigtext)').length > 0) {
-            var currentplayer = $('#htopmenu li:eq(4) a b').text();
+            var currentplayer = "";
+
+            if (getHypTheme() == "4") {
+                currentplayer = $('#htopmenu li:eq(4) a b').text();
+            } else {
+                currentplayer = $('#htopmenu li:eq(7) a b').text();
+            }
 
             $('body center form tr:not(#forumArray)')
                 .each(function (idx, elt) {
