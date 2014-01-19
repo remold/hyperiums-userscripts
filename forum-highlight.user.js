@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     44
+// @version     45
 // @grant       none
 // ==/UserScript==
 
@@ -17,18 +17,6 @@ if (typeof(Storage) !== "undefined") {
     storageAvailable = true;
 }
 var forumJSon = getForumStorage();
-
-function storeForumPostDate(forumThreadId, forumPostDate) {
-    if (!forumJSon[forumThreadId]) {
-        forumJSon[forumThreadId] = forumPostDate;
-        return true;
-    }
-    var storedForumPostDate = new Date(forumJSon[forumThreadId]);
-    if (forumPostDate > storedForumPostDate) {
-        forumJSon[forumThreadId] = forumPostDate;
-    }
-    return true;
-}
 
 function hypDateToDate(hypDate) {
     return new Date(
@@ -56,7 +44,7 @@ function needHighlight(threadId, forumPostDate) {
 
 function getForumStorage() {
     if (!storageAvailable) {
-        return "";
+        return {};
     }
     var forumStorage = localStorage.forumStorage;
     if (forumStorage) {
@@ -68,6 +56,9 @@ function getForumStorage() {
 }
 
 function setForumStorage(forumStorageIn) {
+    if (!storageAvailable) {
+        return false;
+    }
     localStorage.forumStorage = JSON.stringify(forumStorageIn);
     return true;
 }
@@ -140,13 +131,16 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
             setForumStorage(forumJSon);
         }
 
+        // Change all thread to italic where 'last post' date is newer then stored
         $('body center form tr:not(#forumArray)')
             .each(function (idx, elt) {
-                link = $(elt).find('td:not(.hc) a:first').prop("href");
-                threadId = getUrlVars(link)["threadid"];
-                forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
-                if (needHighlight(threadId, forumThreadLastPost)) {
-                    $(elt).find('td:not(.hc) a:first').css("font-style", "italic");
+                if ($(elt).find('#noStyle').length < 1) {
+                    link = $(elt).find('td:not(.hc) a:first').prop("href");
+                    threadId = getUrlVars(link)["threadid"];
+                    forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
+                    if (needHighlight(threadId, forumThreadLastPost)) {
+                        $(elt).find('td:not(.hc) a:first').css("font-style", "italic");
+                    }
                 }
             }
         );
@@ -155,6 +149,7 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
     }
 }
 
+// Store all dates displayed on the display thread page
 if (window.location.search.indexOf("action=fdispmsg") > -1) {
     if (storageAvailable) {
         var forumPostDate;
@@ -180,6 +175,7 @@ if (window.location.search.indexOf("action=fdispmsg") > -1) {
     }
 }
 
+// store all dates on the last 20 (all / alliances) page
 if (window.location.search.indexOf("action=lastmsg") > -1) {
     if (storageAvailable) {
         var forumPostDate;
