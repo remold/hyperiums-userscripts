@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Population Avg
-// @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
+// @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Home
 // @version     34
