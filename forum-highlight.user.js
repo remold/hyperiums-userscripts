@@ -3,7 +3,7 @@
 // @namespace   http://github.com/Nasga/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     39
+// @version     40
 // @grant       none
 // ==/UserScript==
 
@@ -81,13 +81,16 @@ function getUrlVars(urlIn) {
     return vars;
 }
 
-if (window.location.search.indexOf("action=fenter") > -1) {
+if ((window.location.search.indexOf("action=fenter") > -1) ||
+    ($('body center center span.info:not(.bigtext)').length > 0)) {
     if (storageAvailable) {
         var link = "";
         var threadId = "";
         var forumThreadLastPost;
 
+        // Create Read All button
         $('body ul.solidblockmenu2').append('<li><a class="megaTextItem" id="markAllRead">Mark all Read</li>');
+        // on click Read All button, store last posts dates per threadid to forumJSon
         $('#markAllRead').click(function () {
                 $('body center form tr:not(#forumArray)')
                     .each(function (idx, elt) {
