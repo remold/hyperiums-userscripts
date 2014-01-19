@@ -5,6 +5,10 @@
 // @include     http://hyp2.hyperiums.com/servlet/Home
 // @version     34
 // @grant       none
+// @copyright   2013+, Remold Krol (https://github.com/remold)
+// @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+// @author      Remold Krol
+// @homepage    https://github.com/remold
 // ==/UserScript==
 
 /* global $:false */
