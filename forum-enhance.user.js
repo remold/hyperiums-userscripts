@@ -23,24 +23,6 @@ function getUrlVars(urlIn) {
     return vars;
 }
 
-function getForumIds() {
-    var forumIds = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "11"];
-    var href = "";
-    var fId = "";
-    $('#forumSubmenu li a')
-        .each(function (idx, elt) {
-            href = $(elt).attr("href");
-            if (href.indexOf("forumid") > 0) {
-                fId = href.substr(href.lastIndexOf("=") + 1);
-                if (fId != "2") {
-                    forumIds.push(fId);
-                }
-            }
-        }
-    )
-    return forumIds;
-}
-
 if ((window.location.search.indexOf("action=fenter") > -1) ||
     (($('body center center span.info:not(.bigtext)').length > 0) &&
         (window.location.search.indexOf("action=lastmsg") > -1))) {
@@ -56,12 +38,33 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
         }
     );
 
-    var forumIds = getForumIds();
     var currentForum = getUrlVars(window.location.href)["forumid"];
     if (currentForum != "undefined") {
+
+        // get all forum Ids from the top menu
+        var forumIds = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "11"];
+        var allianceOnlyIds = [];
+        $('#forumSubmenu li a')
+            .each(function (idx, elt) {
+                var href = $(elt).attr("href");
+                if (href.indexOf("forumid") > 0) {
+                    var fId = href.substr(href.lastIndexOf("=") + 1);
+                    if (fId != "2") {
+                        forumIds.push(fId);
+                        allianceOnlyIds.push(fId);
+                    }
+                }
+            }
+        )
+
+        // calculate nex/prev/
         var prev = forumIds[($.inArray(currentForum, forumIds) - 1 + forumIds.length) % forumIds.length];
         var next = forumIds[($.inArray(currentForum, forumIds) + 1) % forumIds.length];
+        var nextAO = allianceOnlyIds[($.inArray(currentForum, allianceOnlyIds) + 1) % allianceOnlyIds.length];
 
+        // add buttons to the left of the sub menu
+        $('body ul.solidblockmenu2').prepend('<li><a class="megaTextItem" id="nextForum" ' +
+            'href="http://hyp2.hyperiums.com/servlet/Forums?action=fenter&forumid=' + nextAO + '">AO></li>');
         $('body ul.solidblockmenu2').prepend('<li><a class="megaTextItem" id="nextForum" ' +
             'href="http://hyp2.hyperiums.com/servlet/Forums?action=fenter&forumid=' + next + '">>>></li>');
         $('body ul.solidblockmenu2').prepend('<li><a class="megaTextItem" id="prevForum" ' +
@@ -69,6 +72,8 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
     }
 }
 
+// If a Forum Thread Display page is shown and contains the special gotolast parameter
+// search the last page of the thread and redirect to it
 if (window.location.search.indexOf("action=fdispmsg") > -1) {
     if (window.location.search.indexOf("gotolast=1") > -1) {
         var lastPagelink = "";
