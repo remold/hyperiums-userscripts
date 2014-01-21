@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     46
+// @version     47
 // @grant       none
 // @copyright   2013+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -92,14 +92,16 @@ function getHypTheme() {
 }
 
 if ((window.location.search.indexOf("action=fenter") > -1) ||
-    ($('body center center span.info:not(.bigtext)').length > 0)) {
+    (($('body center center span.info:not(.bigtext)').length > 0) &&
+        (window.location.search.indexOf("action=lastmsg") > -1))) {
     if (storageAvailable) {
         var link = "";
         var threadId = "";
         var forumThreadLastPost;
 
         // Create Read All button
-        $('body ul.solidblockmenu2').append('<li><a class="megaTextItem" id="markAllRead">Mark all Read</li>');
+        $('body ul.solidblockmenu2').
+            append('<li><a class="megaTextItem" id="markAllRead" href="#">Mark all Read</li>');
         // on click Read All button, store last posts dates per threadid to forumJSon
         $('#markAllRead').click(function () {
                 $('body center form tr:not(#forumArray)')
@@ -121,6 +123,7 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
                     }
                 )
                 setForumStorage(forumJSon);
+                return false;
             }
         );
 
