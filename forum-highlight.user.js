@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     47
+// @version     48
 // @grant       none
 // @copyright   2013+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -15,11 +15,6 @@
 
 "use strict";
 
-var storageAvailable = false;
-
-if (typeof(Storage) !== "undefined") {
-    storageAvailable = true;
-}
 var forumJSon = getForumStorage();
 
 function hypDateToDate(hypDate) {
@@ -47,9 +42,6 @@ function needHighlight(threadId, forumPostDate) {
 }
 
 function getForumStorage() {
-    if (!storageAvailable) {
-        return {};
-    }
     var forumStorage = localStorage.forumStorage;
     if (forumStorage) {
         return JSON.parse(forumStorage);
@@ -60,9 +52,6 @@ function getForumStorage() {
 }
 
 function setForumStorage(forumStorageIn) {
-    if (!storageAvailable) {
-        return false;
-    }
     localStorage.forumStorage = JSON.stringify(forumStorageIn);
     return true;
 }
@@ -94,7 +83,6 @@ function getHypTheme() {
 if ((window.location.search.indexOf("action=fenter") > -1) ||
     (($('body center center span.info:not(.bigtext)').length > 0) &&
         (window.location.search.indexOf("action=lastmsg") > -1))) {
-    if (storageAvailable) {
         var link = "";
         var threadId = "";
         var forumThreadLastPost;
@@ -175,12 +163,11 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
         );
 
 
-    }
+
 }
 
 // Store all dates displayed on the display thread page
 if (window.location.search.indexOf("action=fdispmsg") > -1) {
-    if (storageAvailable) {
         var forumPostDate;
         var forumThreadId;
         var storedForumDate;
@@ -201,12 +188,11 @@ if (window.location.search.indexOf("action=fdispmsg") > -1) {
             }
         );
         setForumStorage(forumJSon);
-    }
+
 }
 
 // store all dates on the last 20 (all / alliances) page
 if (window.location.search.indexOf("action=lastmsg") > -1) {
-    if (storageAvailable) {
         var forumPostDate;
         var forumThreadId;
         var storedForumDate;
@@ -231,5 +217,5 @@ if (window.location.search.indexOf("action=lastmsg") > -1) {
             }
         );
         setForumStorage(forumJSon);
-    }
+
 }
