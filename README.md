@@ -20,8 +20,14 @@ On the thread overview pages all thread with new messages (not viewed yet) will 
 
 ## Forum enhancement
 Shows a link to the last page of a thread in the forum thread overview page.
+Shows a <<<<, a >>>> and a >ao> button on the forum thread overview page.
 
-Usage: Click the => link behind the thread to go to the last page of the thread.
+Usage:
+* Click the => link behind the thread to go to the last page of the thread.
+* The <<<< shows the thread overview page of the previous forum (according to the menu)
+* The >>>> shows the thread overview page of the next forum (according to the menu)
+* The >ao> shows the thread overview page of the next forum, alliances only (no HD etc)
+
 
 [install link: Forum enhancement](https://github.com/remold/hyperiums-userscripts/raw/master/forum-enhance.user.js)
 
