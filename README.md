@@ -2,7 +2,7 @@
 
 This repository contains multiple GreaseMonkey scripts for Hyperiums (http://www.hyperiums.com)
 
-To use these scripts, you must use Firefox with [Greasemonkey]9https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) extension.
+To use these scripts, you must use Firefox with [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) extension.
 Once you have installed GreaseMonkey you can use the install links below.
 
 ## Armies Generation
@@ -10,7 +10,7 @@ Shows a summary + Average of the GAs generation on the bottom of the Factories p
 
 [install link: Armies generation](https://github.com/remold/hyperiums-userscripts/raw/master/armies-generation.user.js)
 
-##Forum 'highlighting'
+##Forum 'highlighting' / track read/unread messages
 Shows which forum threads have new posts.
 
 Usage: Just use the forum like normal and the script keeps track of all shown/visible posts.
