@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     35
+// @version     36
 // @grant       none
 // @copyright   2013+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -64,7 +64,7 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
 
         // add buttons to the left of the sub menu
         $('body ul.solidblockmenu2').prepend('<li><a class="megaTextItem" id="nextForum" ' +
-            'href="http://hyp2.hyperiums.com/servlet/Forums?action=fenter&forumid=' + nextAO + '">AO></li>');
+            'href="http://hyp2.hyperiums.com/servlet/Forums?action=fenter&forumid=' + nextAO + '">>AO></li>');
         $('body ul.solidblockmenu2').prepend('<li><a class="megaTextItem" id="nextForum" ' +
             'href="http://hyp2.hyperiums.com/servlet/Forums?action=fenter&forumid=' + next + '">>>></li>');
         $('body ul.solidblockmenu2').prepend('<li><a class="megaTextItem" id="prevForum" ' +
