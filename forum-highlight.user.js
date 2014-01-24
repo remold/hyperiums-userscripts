@@ -191,7 +191,7 @@ if (window.location.search.indexOf("action=fdispmsg") > -1) {
         } else {
             storedForumDate = new Date(1970, 0, 1);
         }
-        $('body table.sender td.player')
+        $('body table.sender td')
             .each(function (idx, elt) {
                 forumPostDate = hypDateToDate($(elt).text().substr(0, 19));
 //            alert(forumPostDate);
