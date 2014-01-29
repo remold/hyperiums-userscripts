@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     47
+// @version     53
 // @grant       none
 // @copyright   2013+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -40,10 +40,7 @@ function needHighlight(threadId, forumPostDate) {
     } else {
         storedForumDate = new Date(1970, 0, 1);
     }
-    if (forumPostDate > storedForumDate) {
-        return true;
-    }
-    return false;
+    return forumPostDate > storedForumDate;
 }
 
 function getForumStorage() {
@@ -91,96 +88,118 @@ function getHypTheme() {
     return theme;
 }
 
-if ((window.location.search.indexOf("action=fenter") > -1) ||
-    (($('body center center span.info:not(.bigtext)').length > 0) &&
-        (window.location.search.indexOf("action=lastmsg") > -1))) {
-    if (storageAvailable) {
-        var link = "";
-        var threadId = "";
-        var forumThreadLastPost;
+function highlightThreads() {
+    // Change all thread to italic where 'last post' date is newer then stored
+    $('body center form tr:not(#forumArray)')
+        .each(function (idx, elt) {
+            if ($(elt).find('#noStyle').length < 1) {
+                var link = "";
+                var threadId = "";
+                var forumThreadLastPost;
 
-        // Create Read All button
-        $('body ul.solidblockmenu2').
-            append('<li><a class="megaTextItem" id="markAllRead" href="#">Mark all Read</li>');
-        // on click Read All button, store last posts dates per threadid to forumJSon
-        $('#markAllRead').click(function () {
-                $('body center form tr:not(#forumArray)')
-                    .each(function (idx, elt) {
-                        if ($(elt).find('#noStyle').length < 1) {
-                            link = $(elt).find('td:not(.hc) a:first').prop("href");
-                            threadId = getUrlVars(link)["threadid"];
-                            forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
-                            if (forumJSon[threadId]) {
-                                storedForumDate = new Date(forumJSon[threadId]);
-                            } else {
-                                storedForumDate = new Date(1970, 0, 1);
-                            }
-                            if (forumThreadLastPost > storedForumDate) {
-                                forumJSon[threadId] = forumThreadLastPost.toUTCString();
-                                $(elt).find('td:not(.hc) a:first').css("font-style", "normal");
-                            }
-                        }
-                    }
-                )
-                setForumStorage(forumJSon);
-                return false;
+                link = $(elt).find('td:not(.hc) a:first').prop("href");
+                threadId = getUrlVars(link)["threadid"];
+                forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
+                if (needHighlight(threadId, forumThreadLastPost)) {
+                    $(elt).find('td:not(.hc) a:first').css("font-style", "italic");
+                }
             }
-        );
+        }
+    )
+}
 
-        // Mark all threads as read where last post is made by current player
-        // only when a messages was posted
-        if ($('body center center span.info:not(.bigtext)').length > 0) {
-            var currentplayer = "";
-
-            if (getHypTheme() == "4") {
-                currentplayer = $('#htopmenu li:eq(4) a b').text();
-            } else {
-                currentplayer = $('#htopmenu li:eq(7) a b').text();
-            }
-
+function addReadAllButton() {
+    // Create Read All button
+    $('body ul.solidblockmenu2').
+        append('<li><a class="megaTextItem" id="markAllRead" href="#">Mark all Read</li>');
+    // on click Read All button, store last posts dates per threadID to forumJSon
+    $('#markAllRead').click(function () {
             $('body center form tr:not(#forumArray)')
                 .each(function (idx, elt) {
+                    var link = "";
+                    var threadId = "";
+                    var forumThreadLastPost;
+
                     if ($(elt).find('#noStyle').length < 1) {
-                        if ($(elt).find('td.hc:eq(3)').text() == currentplayer) {
-                            forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
-                            link = $(elt).find('td:not(.hc) a:first').prop("href");
-                            threadId = getUrlVars(link)["threadid"];
-                            if (forumJSon[threadId]) {
-                                storedForumDate = new Date(forumJSon[threadId]);
-                            } else {
-                                storedForumDate = new Date(1970, 0, 1);
-                            }
-                            if (forumThreadLastPost > storedForumDate) {
-                                forumJSon[threadId] = forumThreadLastPost.toUTCString();
-                            }
+                        link = $(elt).find('td:not(.hc) a:first').prop("href");
+                        threadId = getUrlVars(link)["threadid"];
+                        forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
+                        if (forumJSon[threadId]) {
+                            storedForumDate = new Date(forumJSon[threadId]);
+                        } else {
+                            storedForumDate = new Date(1970, 0, 1);
+                        }
+                        if (forumThreadLastPost > storedForumDate) {
+                            forumJSon[threadId] = forumThreadLastPost.toUTCString();
+                            $(elt).find('td:not(.hc) a:first').css("font-style", "normal");
                         }
                     }
                 }
             )
             setForumStorage(forumJSon);
+            return false;
         }
+    )
 
-        // Change all thread to italic where 'last post' date is newer then stored
-        $('body center form tr:not(#forumArray)')
-            .each(function (idx, elt) {
-                if ($(elt).find('#noStyle').length < 1) {
-                    link = $(elt).find('td:not(.hc) a:first').prop("href");
-                    threadId = getUrlVars(link)["threadid"];
-                    forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
-                    if (needHighlight(threadId, forumThreadLastPost)) {
-                        $(elt).find('td:not(.hc) a:first').css("font-style", "italic");
-                    }
-                }
-            }
-        );
-
-
-    }
 }
 
+/////////////////////////////////////////////////
+
+if (storageAvailable) {
+
+    if (jQuery.isEmptyObject(getUrlVars(window.location.href))) {
+        // Mark all threads as read where last post is made by current player
+        // only when a messages was posted
+        if ($('body center center span.info:not(.bigtext)').length > 0) {
+            if ($('body center center span.info:not(.bigtext)').text() == "Message sent") {
+
+                var currentPlayer = "";
+
+                if (getHypTheme() == "4") {
+                    currentPlayer = $('#htopmenu li:eq(4) a b').text();
+                } else {
+                    currentPlayer = $('#htopmenu li:eq(7) a b').text();
+                }
+
+                $('body center form tr:not(#forumArray)')
+                    .each(function (idx, elt) {
+                        var link = "";
+                        var threadId = "";
+                        var forumThreadLastPost;
+
+                        if ($(elt).find('#noStyle').length < 1) {
+                            if ($(elt).find('td.hc:eq(3)').text() == currentPlayer) {
+                                forumThreadLastPost = hypDateToDate($(elt).find('td.hc:eq(2)').text());
+                                link = $(elt).find('td:not(.hc) a:first').prop("href");
+                                threadId = getUrlVars(link)["threadid"];
+                                if (forumJSon[threadId]) {
+                                    storedForumDate = new Date(forumJSon[threadId]);
+                                } else {
+                                    storedForumDate = new Date(1970, 0, 1);
+                                }
+                                if (forumThreadLastPost > storedForumDate) {
+                                    forumJSon[threadId] = forumThreadLastPost.toUTCString();
+                                }
+                            }
+                        }
+                    }
+                )
+
+                setForumStorage(forumJSon);
+            }
+        }
+        highlightThreads();
+        addReadAllButton();
+
+    }
+    if (window.location.search.indexOf("action=fenter") > -1) {
+        addReadAllButton();
+        highlightThreads();
+    }
+
 // Store all dates displayed on the display thread page
-if (window.location.search.indexOf("action=fdispmsg") > -1) {
-    if (storageAvailable) {
+    if (window.location.search.indexOf("action=fdispmsg") > -1) {
+
         var forumPostDate;
         var forumThreadId;
         var storedForumDate;
@@ -201,19 +220,19 @@ if (window.location.search.indexOf("action=fdispmsg") > -1) {
             }
         );
         setForumStorage(forumJSon);
+
     }
-}
 
 // store all dates on the last 20 (all / alliances) page
-if (window.location.search.indexOf("action=lastmsg") > -1) {
-    if (storageAvailable) {
-        var forumPostDate;
-        var forumThreadId;
-        var storedForumDate;
-        var link = "";
+    if (window.location.search.indexOf("action=lastmsg") > -1) {
 
         $('body center table.hc:not(.body)')
             .each(function (idx, elt) {
+                var forumPostDate;
+                var forumThreadId;
+                var storedForumDate;
+                var link = "";
+
                 if ($(elt).width() > 460) {
                     link = $(elt).find('tr.msgForum td.hc a').attr("href");
 //                if (link != 'undefined') {
