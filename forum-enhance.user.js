@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     36
+// @version     37
 // @grant       none
 // @copyright   2013+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -23,9 +23,10 @@ function getUrlVars(urlIn) {
     return vars;
 }
 
-if ((window.location.search.indexOf("action=fenter") > -1) ||
-    (($('body center center span.info:not(.bigtext)').length > 0) &&
-        (window.location.search.indexOf("action=lastmsg") > -1))) {
+//if ((window.location.search.indexOf("action=fenter") > -1) ||
+//    (($('body center center span.info:not(.bigtext)').length > 0) &&
+//        (window.location.search.indexOf("action=lastmsg") > -1))) {
+if ($('center span.info.bigtext a').attr("href").indexOf("Alliance=") > -1) {
     var linkToLast;
     $('body center form td:not(.hc) a')
         .each(function (idx, elt) {
@@ -38,7 +39,7 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
         }
     );
 
-    var currentForum = getUrlVars(window.location.href)["forumid"];
+    var currentForum = getUrlVars($('center span.info.bigtext a').attr("href").indexOf("Alliance="))["tagid"];
     if (currentForum != "undefined") {
 
         // get all forum Ids from the top menu
@@ -60,7 +61,10 @@ if ((window.location.search.indexOf("action=fenter") > -1) ||
         // calculate nex/prev/
         var prev = forumIds[($.inArray(currentForum, forumIds) - 1 + forumIds.length) % forumIds.length];
         var next = forumIds[($.inArray(currentForum, forumIds) + 1) % forumIds.length];
-        var nextAO = allianceOnlyIds[($.inArray(currentForum, allianceOnlyIds) + 1) % allianceOnlyIds.length];
+        var nextAO = allianceOnlyIds[0];
+        if ($.inArray(currentForum, allianceOnlyIds) > 0) {
+            allianceOnlyIds[($.inArray(currentForum, allianceOnlyIds) + 1) % allianceOnlyIds.length];
+        }
 
         // add buttons to the left of the sub menu
         $('body ul.solidblockmenu2').prepend('<li><a class="megaTextItem" id="nextForum" ' +
