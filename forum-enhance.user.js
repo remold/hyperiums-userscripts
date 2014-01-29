@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     37
+// @version     45
 // @grant       none
 // @copyright   2013+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -23,10 +23,23 @@ function getUrlVars(urlIn) {
     return vars;
 }
 
-//if ((window.location.search.indexOf("action=fenter") > -1) ||
-//    (($('body center center span.info:not(.bigtext)').length > 0) &&
-//        (window.location.search.indexOf("action=lastmsg") > -1))) {
-if ($('center span.info.bigtext a').attr("href").indexOf("Alliance=") > -1) {
+function isThreadOverviewPage() {
+    if (window.location.search.indexOf("action=fenter") > -1) {
+        return true;
+    }
+    if (jQuery.isEmptyObject(getUrlVars(window.location.href))) {
+        if ( ! jQuery.isEmptyObject($('center span.info.bigtext a'))) {
+            if ($('center span.info.bigtext a').attr("href") != undefined) {
+                if ($('center span.info.bigtext a').attr("href").indexOf("Alliance") > -1) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+if (isThreadOverviewPage) {
     var linkToLast;
     $('body center form td:not(.hc) a')
         .each(function (idx, elt) {
@@ -39,7 +52,13 @@ if ($('center span.info.bigtext a').attr("href").indexOf("Alliance=") > -1) {
         }
     );
 
-    var currentForum = getUrlVars($('center span.info.bigtext a').attr("href").indexOf("Alliance="))["tagid"];
+    var currentForum = getUrlVars(window.location.href)["forumid"];
+    if (currentForum == undefined) {
+        if ((!jQuery.isEmptyObject($('body center form td:not(.hc) a:first'))) &&
+            ($('body center form td:not(.hc) a:first').prop("href").indexOf("Alliance") > -1)) {
+            currentForum = getUrlVars($('center span.info.bigtext a').attr("href"))["forumid"];
+        }
+    }
     if (currentForum != "undefined") {
 
         // get all forum Ids from the top menu
@@ -62,8 +81,8 @@ if ($('center span.info.bigtext a').attr("href").indexOf("Alliance=") > -1) {
         var prev = forumIds[($.inArray(currentForum, forumIds) - 1 + forumIds.length) % forumIds.length];
         var next = forumIds[($.inArray(currentForum, forumIds) + 1) % forumIds.length];
         var nextAO = allianceOnlyIds[0];
-        if ($.inArray(currentForum, allianceOnlyIds) > 0) {
-            allianceOnlyIds[($.inArray(currentForum, allianceOnlyIds) + 1) % allianceOnlyIds.length];
+        if ($.inArray(currentForum, allianceOnlyIds) > -1) {
+            nextAO = allianceOnlyIds[($.inArray(currentForum, allianceOnlyIds) + 1) % allianceOnlyIds.length];
         }
 
         // add buttons to the left of the sub menu
