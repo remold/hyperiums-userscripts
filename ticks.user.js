@@ -4,7 +4,7 @@
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @require     https://raw.github.com/Nasga/hyperiums-userscripts/master/libs/moment.min.js
 // @include     http://hyp2.hyperiums.com/servlet/*
-// @version     3
+// @version     4
 // @grant       none
 // ==/UserScript==
 
@@ -63,7 +63,7 @@ var offsetInMS = new Date().getTime() -
       .replace(' ','T') + '+00:00'
     );
 
-$('.servertime').remove();
+$('.servertime.floatingST').remove();
 var $div = $('<div id="hyperiums7-ticks" class="servertime">');
 $('body').append($div);
 $('body').append(
