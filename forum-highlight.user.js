@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     53
+// @version     54
 // @grant       none
 // @copyright   2013+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -151,7 +151,7 @@ if (storageAvailable) {
         // Mark all threads as read where last post is made by current player
         // only when a messages was posted
         if ($('body center center span.info:not(.bigtext)').length > 0) {
-            if ($('body center center span.info:not(.bigtext)').text() == "Message sent") {
+            if ($('body center center span.info:not(.bigtext):first').text() == "Message sent") {
 
                 var currentPlayer = "";
 
