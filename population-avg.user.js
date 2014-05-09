@@ -3,9 +3,9 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Home
-// @version     35
+// @version     38
 // @grant       none
-// @copyright   2013+, Remold Krol (https://github.com/remold)
+// @copyright   2014+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 // @author      Remold Krol
 // @homepage    https://github.com/remold
@@ -23,6 +23,12 @@ function addGlobalStyle(css) {
     style.type = 'text/css';
     style.innerHTML = css;
     head.appendChild(style);
+}
+
+function extractGrowth(sStr) {
+    var rx = /Organic growth: (.*) \//g;
+    var arr = rx.exec(sStr);
+    return arr[1];
 }
 
 addGlobalStyle(".td_right { text-align: right ! important; } .th_right { text-align: right ! important; }");
@@ -143,8 +149,7 @@ if (!$('.tabbertab').length) {
     $('body')
       .find('img[src*="/misc/pop_icon_Human"]')
       .each(function(idx, elt) {
-        tmpGrowthStr = $(elt).attr("onmouseover");
-        tmpGrowth= parseInt(tmpGrowthStr.substring(tmpGrowthStr.indexOf(":")+2,tmpGrowthStr.indexOf("/")-1));
+        tmpGrowth=parseInt(extractGrowth($(elt).attr("onmouseover")));
         populationGrowth += tmpGrowth;
         race.human.growth += tmpGrowth;
         tmpGrowthText = tmpGrowthStr.substring(tmpGrowthStr.indexOf("'")+1,tmpGrowthStr.lastIndexOf("'")-3);
@@ -154,8 +159,7 @@ if (!$('.tabbertab').length) {
     $('body')
       .find('img[src*="/misc/pop_icon_Azterk"]')
       .each(function(idx, elt) {
-        tmpGrowthStr = $(elt).attr("onmouseover");
-        tmpGrowth= parseInt(tmpGrowthStr.substring(tmpGrowthStr.indexOf(":")+2,tmpGrowthStr.indexOf("/")-1));
+            tmpGrowth=parseInt(extractGrowth($(elt).attr("onmouseover")));
         populationGrowth += tmpGrowth;
         race.azterk.growth += tmpGrowth;
         tmpGrowthText = tmpGrowthStr.substring(tmpGrowthStr.indexOf("'")+1,tmpGrowthStr.lastIndexOf("'")-3);
@@ -165,8 +169,7 @@ if (!$('.tabbertab').length) {
     $('body')
       .find('img[src*="/misc/pop_icon_Xillor"]')
       .each(function(idx, elt) {
-        tmpGrowthStr = $(elt).attr("onmouseover");
-        tmpGrowth= parseInt(tmpGrowthStr.substring(tmpGrowthStr.indexOf(":")+2,tmpGrowthStr.indexOf("/")-1));
+        tmpGrowth=parseInt(extractGrowth($(elt).attr("onmouseover")));
         populationGrowth += tmpGrowth;
         race.xillor.growth += tmpGrowth;
         tmpGrowthText = tmpGrowthStr.substring(tmpGrowthStr.indexOf("'")+1,tmpGrowthStr.lastIndexOf("'")-3);
@@ -372,7 +375,7 @@ $('.tabbertab').each(
     .find('img[src*="/misc/pop_icon_Human"]')
     .each(function(idx, elt) {
       tmpGrowthStr = $(elt).attr("onmouseover");
-      tmpGrowth= parseInt(tmpGrowthStr.substring(tmpGrowthStr.indexOf(":")+2,tmpGrowthStr.indexOf("/")-1));
+      tmpGrowth=parseInt(extractGrowth(tmpGrowthStr));
       populationGrowth += tmpGrowth;
       race.human.growth += tmpGrowth;
       tmpGrowthText = tmpGrowthStr.substring(tmpGrowthStr.indexOf("'")+1,tmpGrowthStr.lastIndexOf("'")-3);
@@ -384,7 +387,7 @@ $('.tabbertab').each(
     .find('img[src*="/misc/pop_icon_Azterk"]')
 	.each(function(idx, elt) {
       tmpGrowthStr = $(elt).attr("onmouseover");
-      tmpGrowth= parseInt(tmpGrowthStr.substring(tmpGrowthStr.indexOf(":")+2,tmpGrowthStr.indexOf("/")-1));
+      tmpGrowth=parseInt(extractGrowth(tmpGrowthStr));
       populationGrowth += tmpGrowth;
       race.azterk.growth += tmpGrowth;
       tmpGrowthText = tmpGrowthStr.substring(tmpGrowthStr.indexOf("'")+1,tmpGrowthStr.lastIndexOf("'")-3);
@@ -395,7 +398,7 @@ $('.tabbertab').each(
     .find('img[src*="/misc/pop_icon_Xillor"]')
 	.each(function(idx, elt) {
       tmpGrowthStr = $(elt).attr("onmouseover");
-      tmpGrowth= parseInt(tmpGrowthStr.substring(tmpGrowthStr.indexOf(":")+2,tmpGrowthStr.indexOf("/")-1));
+      tmpGrowth=parseInt(extractGrowth(tmpGrowthStr));
       populationGrowth += tmpGrowth;
       race.xillor.growth += tmpGrowth;
       tmpGrowthText = tmpGrowthStr.substring(tmpGrowthStr.indexOf("'")+1,tmpGrowthStr.lastIndexOf("'")-3);
