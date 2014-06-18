@@ -2,8 +2,9 @@
 // @name        Hyperiums forum backup
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
+// @require     https://raw.githubusercontent.com/remold/hyperiums-userscripts/master/libs/fso.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     1
+// @version     2
 // @grant       none
 // @copyright   2014+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
