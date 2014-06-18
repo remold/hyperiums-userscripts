@@ -4,7 +4,7 @@
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @require     https://raw.githubusercontent.com/remold/hyperiums-userscripts/master/libs/fso.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Forums*
-// @version     2
+// @version     3
 // @grant       none
 // @copyright   2014+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -16,6 +16,7 @@
 
 "use strict";
 
+console.log('started forum backup');
 /**
 *	FSO(
 *		opt_byteSize, [= 1024 * 1024 * 1024]
