@@ -33,7 +33,6 @@ function extractWTR(sStr) {
   return arr[1];
 }
 
-if ($('.formTitle').text() === "") {
 addGlobalStyle(".td_right { text-align: right ! important; } .th_right { text-align: right ! important; }");
 
 var tmpWTR = 0;
@@ -43,7 +42,6 @@ var wtr = {
         min: 50,
         avg: 0,
         planets: 0
-
 };
 
   $('td.hr:contains("WTR") td.hr:contains("WTR")')
@@ -52,10 +50,10 @@ var wtr = {
         wtr.planets++;
         wtr.sum += tmpWTR;
         if (tmpWTR > wtr.max) {
-          tmpWTR.max = tmpWTR;
+          wtr.max = tmpWTR;
         }
         if (tmpWTR < tmpWTR.min) {
-          tmpWTR.min = tmpWTR;
+          wtr.min = tmpWTR;
         }
     }
 );
@@ -79,7 +77,7 @@ if (wtr.min === 9999999) {
     wtr.min = " .";
 }
 
-$('body center center')
+  $('body center > br:nth-last-of-type(3)')
     .after(
         '<div class="banner" ' +
             'style="text-align: left; width: 580px;" ' +
@@ -92,19 +90,17 @@ $('body center center')
             '<tr><td>Planet #</td>' +
             '<td class="td_right"> ' + wtr.planets + '</td></tr>' +
 
-            '<tr><td>Exploitation Sum</td>' +
+            '<tr><td>Sum</td>' +
             '<td class="td_right"> ' + wtr.sum + '</td></tr>' +
 
-            '<tr><td>Exploitation Max</td>' +
+            '<tr><td>Max</td>' +
             '<td class="td_right"> ' + wtr.max + '</td></tr>' +
 
-            '<tr><td>Exploitation Avg</td>' +
+            '<tr><td>Avg</td>' +
             '<td class="td_right"> ' + wtr.avg + '</td></tr>' +
 
-            '<tr><td>Exploitation Min</td>' +
+            '<tr><td>Min</td>' +
             '<td class="td_right"> ' + wtr.min + '</td></tr>' +
 
             '</table></div><br />'
     );
-
-}
