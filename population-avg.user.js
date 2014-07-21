@@ -3,7 +3,7 @@
 // @namespace   http://github.com/remold/hyperiums-greasemonkey/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @include     http://hyp2.hyperiums.com/servlet/Home
-// @version     40
+// @version     41
 // @grant       none
 // @copyright   2014+, Remold Krol (https://github.com/remold)
 // @license     Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -313,7 +313,6 @@ $('.tabbertab').each(
       }
     };
 
-    var growSum = 0;
     $(tab)
       .find('img[src*="/misc/pop_icon_Human"]')
       .parent('td')
